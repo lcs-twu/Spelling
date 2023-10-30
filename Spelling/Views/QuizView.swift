@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-enum Outcome: String {
-    case undertermined = " "
-    case correct = "✅"
-    case incorrect = "❎"
-}
-
 struct QuizView: View {
     
     // MARK: Stored properties
