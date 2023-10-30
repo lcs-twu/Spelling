@@ -13,6 +13,7 @@ struct QuizView: View {
     @State var currentItem = itemsToSpell.randomElement()!
     @State var userGuess = ""
     @State var currentOutcome: Outcome = .undertermined
+    @State var history: [Result] = []
     // MARK: Computed properties
     var body: some View {
         
@@ -59,6 +60,16 @@ struct QuizView: View {
     }
     
     func newWord() {
+        //add current result to the history
+        history.insert(
+            Result(
+                item: currentItem,
+                guessProvided: userGuess,
+                outcome: currentOutcome
+            ),
+            at: 0
+        )
+        print(history)
         //reset quiz page
         currentItem = itemsToSpell.randomElement()!
         userGuess = ""
