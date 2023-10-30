@@ -17,38 +17,53 @@ struct QuizView: View {
     // MARK: Computed properties
     var body: some View {
         
-        VStack {
-            Image(currentItem.imageName)
-                .resizable()
-                .scaledToFit()
-            
-            HStack {
-                TextField("Enter the name of the item", text: $userGuess)
-                    .padding(.horizontal)
+        HStack {
+            VStack {
+                Image(currentItem.imageName)
+                    .resizable()
+                    .scaledToFit()
                 
-                Text(currentOutcome.rawValue)
+                HStack {
+                    TextField("Enter the name of the item", text: $userGuess)
+                        .padding(.horizontal)
+                    
+                    Text(currentOutcome.rawValue)
+                }
+                .padding(.horizontal)
+                
+                HStack {
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        newWord()
+                    }, label: {
+                        Text("New word")
+                    })
+                    
+                    Button(action: { 
+                        checkGuess()},label: {
+                        Text("Submit")
+                       })
+                }
+                .padding()
             }
-            .padding(.horizontal)
-            
-            HStack {
-                
-                Spacer()
-                
-                Button(action: {
-                    newWord()
-                }, label: {
-                    Text("New word")
-                })
-                
-                Button(action: { 
-                    checkGuess()},label: {
-                    Text("Submit")
-                   })
-            }
-            .padding()
+            List(history){ currentResult in
+                HStack{
+                    Image(currentResult.item.imageName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50)
+                    
+                    Text(currentResult.guessProvided)
+                    
+                    Spacer()
+                    Text(currentResult.outcome.rawValue)
+                }}
         }
         
     }
+    
     func checkGuess() {
         if userGuess == currentItem.word{
             print("correct")
