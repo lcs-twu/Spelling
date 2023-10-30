@@ -33,6 +33,12 @@ struct QuizView: View {
                 
                 Spacer()
                 
+                Button(action: {
+                    newWord()
+                }, label: {
+                    Text("New word")
+                })
+                
                 Button(action: { 
                     checkGuess()},label: {
                     Text("Submit")
@@ -50,6 +56,13 @@ struct QuizView: View {
             print("wrong")
             currentOutcome = .incorrect
         }
+    }
+    
+    func newWord() {
+        //reset quiz page
+        currentItem = itemsToSpell.randomElement()!
+        userGuess = ""
+        currentOutcome = .undertermined
     }
 }
 
