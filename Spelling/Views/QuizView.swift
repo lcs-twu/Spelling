@@ -14,6 +14,7 @@ struct QuizView: View {
     @State var userGuess = ""
     @State var currentOutcome: Outcome = .undertermined
     @State var history: [Result] = []
+    @State var selectedOutcomeFilter: Outcome = .undertermined
     // MARK: Computed properties
     var body: some View {
         
@@ -48,18 +49,42 @@ struct QuizView: View {
                 }
                 .padding()
             }
-            List(filtering(originalList: history, on: .correct)){ currentResult in
-                HStack{
-                    Image(currentResult.item.imageName)
+            VStack {
+                
+                Picker("Filtering on", selection: $selectedOutcomeFilter){
+                    //what shows in UI and what goes in property
+                    Text("All results").tag(Outcome.undertermined)
+                    Text("Correct").tag(Outcome.correct)
+                    Text("Incorrect").tag(Outcome.incorrect)
+                }
+                .padding()
+                
+                List(
+                    filtering(
+                        originalList: history,
+                        on: selectedOutcomeFilter
+                    )
+                ){ currentResult in
+                    HStack{
+                        Image(
+                            currentResult.item.imageName
+                        )
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 50)
-                    
-                    Text(currentResult.guessProvided)
-                    
-                    Spacer()
-                    Text(currentResult.outcome.rawValue)
-                }}
+                        .frame(
+                            width: 50
+                        )
+                        
+                        Text(
+                            currentResult.guessProvided
+                        )
+                        
+                        Spacer()
+                        Text(
+                            currentResult.outcome.rawValue
+                        )
+                    }}
+            }
         }
         
     }
